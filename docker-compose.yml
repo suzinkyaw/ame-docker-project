@@ -1,0 +1,32 @@
+version: '3.5'
+
+services:
+  laravel-app:
+    build:
+      context: '.'
+      
+    container_name: ame-docker-project
+    
+    volumes:
+      - .:/var/www/html
+    ports:
+      - 10000:80
+    
+  db:
+        image: mysql:8.0.3
+        environment:
+            MYSQL_ROOT_PASSWORD: 12345
+            MYSQL_DATABASE: mydatabase
+        ports:
+            - 20000:3306
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    ports:
+      - '30000:80'
+   
+    
